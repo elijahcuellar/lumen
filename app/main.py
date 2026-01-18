@@ -2,9 +2,23 @@ import secrets
 import string
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import ORJSONResponse
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=False,
+    allow_methods=["GET"],
+    allow_headers=["Accept", "Accept-Language", "Content-Language", "Content-Type"],
+)
 
 
 @app.get("/api/v1/password/{length}", response_class=ORJSONResponse)
